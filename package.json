@@ -1,0 +1,16 @@
+{
+  "name": "proxy-server",
+  "version": "1.0.0",
+  "description": "simple proxy server",
+  "main": "proxy_server.js",
+  "dependencies": {
+    "http-proxy": "^1.16.2",
+    "yargs": "^7.0.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "node proxy_server.js"
+  },
+  "author": "Ralph Smith",
+  "license": "MIT"
+}
