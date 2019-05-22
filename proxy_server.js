@@ -29,7 +29,6 @@ proxy.on('proxyReq', function(proxyReq, req, res, options) {
   if (jsid) {
     proxyReq.setHeader('cookie', 'JSESSIONID=' + jsid);
   }
-  proxyReq.path = proxyReq.path.replace('/banking-services/api/', '');
 });
 
 //
