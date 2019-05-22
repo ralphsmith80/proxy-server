@@ -1,13 +1,12 @@
 var http = require('http'),
   httpProxy = require('http-proxy'),
-  argv = require('yargs')
-    .usage('Usage: $0 --sid [session-id] --jsid [JSESSIONID] --proxy-host [proxy-host] --p [port]')
-    .demandOption(['sid', 'jsid'])
-    .argv;
+  argv = require('yargs').usage(
+    'Usage: $0 --sid [session-id] --jsid [JSESSIONID] --proxy-host [proxy-host] --p [port]'
+  ).argv;
 
 var sid = argv.sid,
   jsid = argv.jsid,
-  proxyHost = argv['proxy-host'] || '10.238.40.232'
+  proxyHost = argv['proxy-host'] || '10.238.40.232',
   port = argv.port || 3004;
 
 //
@@ -23,10 +22,14 @@ var proxy = httpProxy.createProxyServer({});
 // you need to modify the proxy request before the proxy connection
 // is made to the target.
 //
-proxy.on('proxyReq', function (proxyReq, req, res, options) {
-  proxyReq.setHeader('sid', sid);
-  proxyReq.setHeader('cookie', 'JSESSIONID='+jsid);
-
+proxy.on('proxyReq', function(proxyReq, req, res, options) {
+  if (sid) {
+    proxyReq.setHeader('sid', sid);
+  }
+  if (jsid) {
+    proxyReq.setHeader('cookie', 'JSESSIONID=' + jsid);
+  }
+  proxyReq.path = proxyReq.path.replace('/banking-services/api/', '');
 });
 
 //
@@ -34,13 +37,13 @@ proxy.on('proxyReq', function (proxyReq, req, res, options) {
 // a web request to the target passed in the options
 // also you can use `proxy.ws()` to proxy a websockets request
 //
-var server = http.createServer(function (req, res) {
+var server = http.createServer(function(req, res) {
   // You can define here your custom logic to handle the request
   // and then proxy the request.
   proxy.web(req, res, {
-    target: 'http://'+proxyHost
+    target: 'http://' + proxyHost
   });
 });
 
-console.log('listening on port', port)
+console.log('listening on port', port);
 server.listen(port);

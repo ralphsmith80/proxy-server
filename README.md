@@ -1,14 +1,17 @@
 # proxy-server
+
 A simple proxy server
 
 ## example
-Log in and get a valid `sid` and cookie `JSESSIONID`
+
 ```
-node proxy_server.js --sid=<sid> --jsid=<JSESSIONID>
+node proxy_server.js --proxy-host=10.10.10.10
 ```
+
 or
+
 ```
-npm start -- --sid=<sid> --jsid=<JSESSIONID>
+npm start -- --proxy-host=10.10.10.10
 ```
 
 ## Options
@@ -44,4 +47,3 @@ Type: `String`
 Default: `'10.238.40.232'`
 
 The ip/hostname to proxy api request to.
-
